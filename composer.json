@@ -1,0 +1,42 @@
+{
+	"name":        "germania-kg/redirect-unauthorized",
+
+	"type":        "library",
+	"license":     "MIT",
+
+	"authors": [
+		{
+			"name":  "Carsten Witt",
+			"email": "carstenwitt@germania-kg.de",
+			"role":  "Developer"
+		}
+	],
+
+	"autoload": {
+			"psr-4": {
+					"Germania\\RedirectUnauthorized\\": "src/"
+			}
+	},
+
+  "autoload-dev": {
+      "psr-4": { "tests\\": "tests/src" }
+  },
+
+  "suggest": {
+			"slim/slim": "The Slim Framework"
+  },
+
+	"require": {
+		"psr/log": "^1.0",
+		"psr/http-message": "^1.0",
+		"aura/session": "^2.1"
+	},
+
+	"require-dev": {
+		"satooshi/php-coveralls": "^1.0",
+		"phpunit/phpunit": "^5.2"
+	}
+
+
+
+}
