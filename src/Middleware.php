@@ -58,6 +58,12 @@ class Middleware
     public $auth_required_status_code  = 401;
 
     /**
+     * HTTP Status Code for Redirection
+     * @var string
+     */
+    public $redirect_status_code  = 301;
+
+    /**
      * HTTP Status Code for Responses after successful login. Usually 204.
      * @var string
      */
@@ -111,7 +117,7 @@ class Middleware
             endif;
 
             $this->logger->info("Before Route: Redirect user to login page", [ 'url' => $this->login_url ]);
-            return $response->withHeader('Location', $this->login_url);
+            return $response->withRedirect($this->login_url, $this->redirect_status_code);
         else:
             $this->logger->debug("Before Route: noop");
         endif;
@@ -137,7 +143,7 @@ class Middleware
 
             case $this->auth_required_status_code:
                 $this->logger->info("After Route: Redirect user to login page", [ 'url' => $this->login_url ]);
-                return $response->withHeader('Location', $this->login_url);
+                return $response->withRedirect($this->login_url, $this->redirect_status_code);
                 break;
 
             case $this->authorized_status_code:
@@ -149,7 +155,7 @@ class Middleware
 
                 $session->set( $requested_page_key, null ); // Reset Session
                 $this->logger->info("After Route: Redirect to startpage", [ 'url' => $start_url ]);
-                return $response->withHeader('Location', $start_url);
+                return $response->withRedirect($start_url, $this->redirect_status_code);
                 break;
             default:
                 $this->logger->debug("After Route: noop");
