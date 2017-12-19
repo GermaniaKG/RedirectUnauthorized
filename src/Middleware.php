@@ -97,8 +97,10 @@ class Middleware
         //    If user must authorize first, store requested page URL in session.
         // --------------------------------------------
 
-        if ($response->getStatusCode() == $this->auth_required_status_code):
+        $status = $response->getStatusCode();
+        $this->logger->info("Before Route: Found status code", ['status' => $status ]);
 
+        if ($status == $this->auth_required_status_code):
             // Store startpage if not done already
             if ($startpage = $session->get( $requested_page_key)):
                 $this->logger->info("Before Route: Found startpage in session: " . ($startpage ?: "(none?!)"));
@@ -128,7 +130,10 @@ class Middleware
         // Check for "401 Unauthorized" or "204 No Content"
         // --------------------------------------------
 
-        switch ($response->getStatusCode()):
+        $status = $response->getStatusCode();
+        $this->logger->info("After Route: Found status code", ['status' => $status ]);
+
+        switch ($status):
 
             case $this->auth_required_status_code:
                 $this->logger->info("After Route: Redirect user to login page", [ 'url' => $this->login_url ]);
