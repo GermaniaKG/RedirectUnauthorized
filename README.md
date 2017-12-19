@@ -2,7 +2,7 @@
 
 **This package is distilled from legacy code. You certainly do not want this in your production code.**
 
-This PSR-style Middleware checks if a Response object status code is *401 Unauthorized* and stores the current *Request URI* in a *Aura.Session Segment*. If the user is authenticated (i.e. login successful, *204 No Content*), he will be redirected to this very URI as his start URL. 
+This PSR-style Middleware checks if a Response object status code is *401 Unauthorized* and stores the current *Request URI* in a *Aura.Session Segment*. If the user is authenticated (i.e. login successful, *204 No Content*), he will be redirected to this very URI as his start URL. The redirect status code is 301.
 
 ####In particular
 
@@ -30,6 +30,12 @@ The Response status codes needed are *401* or *204* per default. Create your own
 
 class MyRedirector exends Germania\RedirectUnauthorized\Middleware
 {
+    /**
+     * HTTP Status Code for Redirection
+     * @var string
+     */
+    public $redirect_status_code  = 301;
+    
     /**
      * HTTP Status Code for "Unauthorized". Usually 401.
      * @var string
@@ -87,5 +93,5 @@ Develop using `develop` branch, using [Git Flow](https://github.com/nvie/gitflow
 $ git clone git@github.com:GermaniaKG/RedirectUnauthorized redirect-unauthorized
 $ cd redirect-unauthorized
 $ cp phpunit.xml.dist phpunit.xml
-$ phpunit
+$ vendor/bin/phpunit
 ```
