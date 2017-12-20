@@ -58,10 +58,16 @@ class Middleware
     public $auth_required_status_code  = 401;
 
     /**
+     * Default HTTP Status Code for Redirection
+     * @var string
+     */
+    public static $default_redirect_status_code  = 302;
+
+    /**
      * HTTP Status Code for Redirection
      * @var string
      */
-    public $redirect_status_code  = 301;
+    public $redirect_status_code;
 
     /**
      * HTTP Status Code for Responses after successful login. Usually 204.
@@ -81,6 +87,8 @@ class Middleware
         $this->session   = $session;
         $this->login_url = $login_url;
         $this->logger    = $logger ?: new NullLogger;
+
+        $this->redirect_status_code = static::$default_redirect_status_code;
     }
 
 
